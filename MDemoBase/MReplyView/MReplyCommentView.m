@@ -114,8 +114,8 @@ NSUInteger const MfontTextSize = 16.0;
     if ([text isEqualToString:@"\n"]){
         
         if (self.block) {
+            self.block(textView.text);
             [self.textView resignFirstResponder];
-            self.block(text);
         }
     }
     return YES;
@@ -132,8 +132,11 @@ NSUInteger const MfontTextSize = 16.0;
     
 }
 -(void)close{
+    
     [self.textView resignFirstResponder];
+    [self.textView removeObserver:self forKeyPath:@"contentSize"];
     [self removeFromSuperview];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
